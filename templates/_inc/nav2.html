@@ -1,0 +1,184 @@
+{% load static menu_tags mptt_tags %}
+<!--Main Navigation-->
+<header>
+    <!-- Jumbotron -->
+    <div class="p-3 text-center bg-white border-bottom">
+        <div class="container">
+            <div class="row">
+                <!-- Left elements -->
+                <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+                    <a href="#!" class="ms-md-2">
+                        <img src="{% static 'img/logo-new.png' %}" height="40"/>
+                    </a>
+                </div>
+                <!-- Left elements -->
+
+                <!-- Center elements -->
+                <div class="col-md-4">
+                    <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0">
+                        <input autocomplete="off" type="search" class="form-control rounded"
+                               placeholder="Сайт бойынша іздеу"/>
+                        <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
+                    </form>
+                </div>
+                <!-- Center elements -->
+
+                <!-- Right elements -->
+                <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
+                    <div class="d-flex">
+                        <!-- Cart -->
+
+                        <a class="text-reset me-3" href="https://www.facebook.com/bmso.kz/" target="_blank" title="БМСО-ның фейсбуктегі бетіне көшу"  >
+                            <span><i class="fab fa-facebook"></i></span>
+
+                        </a>
+                        <a class="text-reset me-3" href="https://www.youtube.com/channel/UCBBHeBZmQTSmNjKc0NN-yuQ" target="_blank" title="БМСО-ның ютубтағы бетіне көшу">
+                            <span><i class="fab fa-youtube"></i></span>
+                        </a>
+                        <a class="text-reset me-3" href="https://www.instagram.com/bmso.kz/" target="_blank" title="БМСО-ның инстаграмдағы бетіне көшу">
+                            <span><i class="fab fa-instagram"></i></span>
+                        </a>
+
+
+                        <!-- Languages -->
+                        <div class="dropdown">
+                            <a class="text-reset dropdown-toggle me-3 hidden-arrow" href="#" id="navbarDropdown"
+                               role="button"
+                               data-mdb-toggle="dropdown" aria-expanded="false">
+                                <i class="flag flag-kazakhstan"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="flag flag-kazakhstan"></i>Қазақ
+                                        <i class="fa fa-check text-success ms-2"></i></a>
+                                </li>
+                                <li>
+
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="united kingdom flag"></i>English</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="russia flag"></i>Русский</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- Right elements -->
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+
+    <!-- Navbar mega menu-->
+
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <!-- Container wrapper -->
+        <div class="container">
+
+            <!-- Toggle button -->
+            <button class="navbar-toggler px-0" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            {% show_menu as menu %}
+
+            {% recursetree menu %}
+                <!-- Collapsible wrapper -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left links -->
+                    <ul class="navbar-nav me-auto ps-lg-0 list-group-horizontal" style="padding-left: .15rem;">
+                        <!-- Navbar dropdown -->
+                        <li class="nav-item dropdown position-static">
+                            <a class="nav-link dropdown-toggle fs-5 text" href="#" id="navbarDropdown" role="button"
+                               data-mdb-toggle="dropdown"
+                               aria-expanded="false">
+                                {{ node.name }}
+                            </a>
+                            {% if not node.is_leaf_node %}
+                                <!-- Dropdown menu -->
+                                <div class="dropdown-menu w-100 mt-0" aria-labelledby="navbarDropdown"
+                                     style="border-top-left-radius: 0; border-top-right-radius: 0;">
+                                <div class="container">
+                                <div class="row my-4">
+                                <div class="col-md-4 col-xl-3 mb-3 mb-xl-0">
+                                    <div class="pt-2">
+                                        <div class="bg-image mb-4"
+                                             data-mdb-ripple-color="light">
+                                            {% if node.image %}
+                                                <img src="{{ node.image.url }}" class="img-fluid"/>
+                                            {% endif %}
+                                            <a href="#!">
+                                                <div class="mask"
+                                                     style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-xl-8 mb-4 mb-md-0 ">
+                                    <div class="container">
+                                        <div class="row">
+                                            {% for child in node.children.all %}
+                                                {% if forloop.counter <= 3 %}
+
+                                                    <div class="col-lg-6 col-md-6 col-xl-6  mb-md-0 d-flex align-items-start list-group list-group-flush">
+                                                        {% if child.stroke %}<br /><a href="{{ child.get_absolute_url }}"
+                                                           class="list-group-item list-group-item-action">{{ child.name }}</a>
+                                                        <hr class="my-2">
+                                                            {% else %}<a href="{{ child.get_absolute_url }}"
+                                                           class="list-group-item list-group-item-action">{{ child.name }}</a>
+                                                        <hr class="my-2">
+                                                            {% endif %}
+                                                    </div>
+
+                                                {% else %}
+                                                    <div class="col-lg-6 col-md-6 col-xl-6 mb-md-0 d-flex align-items-end list-group list-group-flush">
+                                                        {% if child.stroke %}
+                                                            <br/><a href="{{ child.get_absolute_url }}"
+                                                                    class="list-group-item list-group-item-action ">{{ child.name|safe }}</a>
+                                                            <hr class="my-2">
+                                                        {% else %}<a href="{{ child.get_absolute_url }}"
+                                                                     class="list-group-item list-group-item-action ">{{ child.name|safe }}</a>
+                                                            <hr class="my-2">
+                                                        {% endif %}
+                                                    </div>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            {% endif %}
+                            </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Left links -->
+
+                </div>
+            {% endrecursetree %}
+
+
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+
+    <!-- Navbar mega menu--->
+
+    <!-- Sidenav -->
+
+    <!-- Sidenav -->
+
+
+</header>
+<!--Main Navigation-->
+<!--Main Navigation-->

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static blog thumbnail %}
+{% block content %}
+{% include '_inc/slider.html' %}
+    <section class="news">
+    <div class="container">
+      <br>
+      <div class="editors-news">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="d-flex position-relative float-left">
+              <h3 class="section-title font-weight-600 ">Жаңалықтар</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            {% show_news as news %}
+            {% for new in news %}
+          <div class="col-lg-6  mb-5 mb-sm-2">
+            <div class="position-relative image-hover">
+
+            {%if new.image%}
+                                            {% thumbnail new.image "612x408" crop="center" as im %}
+                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid">
+                                            {% endthumbnail %}
+                                            {%else%}
+                                            <img src="{% static 'images/no-image.jpg' %}"  class="img-fluid">
+                                            {%endif%}
+
+                {% if new.image %}
+              <img src="{{ new.photo }}" class="img-fluid" alt="world-news">
+                {% endif %}
+              <span class="thumb-title">{{ new.get_name_gategory }}</span>
+            </div>
+            <h5 class="font-weight-600 mt-3"><a href="news-detail.html">
+                {{ new.title}}</a>
+            </h5>
+            <p class="fs-15 font-weight-normal">
+                {{ new.text|safe|truncatechars_html:100|capfirst}}
+            </p>
+          </div>
+            {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End сontent news-->
+  <!--Content service-->
+    <br><br>
+    <hr>
+  <div class="container p-2">
+    <div class="row">
+      <div class="col-lg-4 mb-2 mb-sm-4">
+
+        <div class="item">
+
+          <div class="bg-rb p-1">
+            <img src="img/book.png" alt="" class="p-3">
+            <p>Мектепке дейінгі және орта білім ұйымдарының оқулықтары мен ОӘК-лерін сараптау</p>
+          </div>
+          <span class="information d-flex align-items-center justify-content-center">
+            <a href="#"><strong>Тарауға өту</strong> </a>
+          </span>
+
+        </div>
+      </div>
+      <div class="col-lg-4  mb-2 mb-sm-4">
+
+        <div class="item">
+
+          <div class="bg-rb  p-1">
+            <img src="img/homework.png" alt="" class="p-3">
+            <p >Қосымша әдебиетті сараптау<br><br></p>
+          </div>
+          <span class="information d-flex align-items-center justify-content-center">
+            <a href="#"><strong>Тарауға өту</strong> </a>
+          </span>
+
+        </div>
+      </div>
+      <div class="col-lg-4  mb-2 mb-sm-4">
+
+        <div class="item">
+
+          <div class="bg-rb p-1">
+            <img src="img/school.png" alt="" class="p-3">
+            <p>Оқулықтардың мектептерге жеткізілуін мониторингтеу</p>
+          </div>
+          <span class="information d-flex align-items-center justify-content-center">
+            <a href="#"><strong>Тарауға өту</strong> </a>
+          </span>
+
+        </div>
+      </div>
+      <div class="col-lg-4 mb-2 mb-sm-4">
+
+        <div class="item">
+
+          <div class="bg-rb p-1">
+            <img src="img/pencil.png" alt="" class="p-3">
+            <p>Мектепке дейінгі және орта білім ұйымдарының оқу жоспарлары мен бағдарламаларын сараптау</p>
+          </div>
+          <span class="information d-flex align-items-center justify-content-center">
+            <a href="#"><strong>Тарауға өту</strong> </a>
+          </span>
+
+        </div>
+      </div>
+      <div class="col-lg-4  mb-2 mb-sm-4">
+
+        <div class="item">
+
+          <div class="bg-rb p-1">
+            <img src="img/presentation.png" alt="" class="p-3">
+            <p>Оқулықтану теориясы мен практикасын жетілдіру жөніндегі зерттеу жобалары</p>
+          </div>
+          <span class="information d-flex align-items-center justify-content-center">
+            <a href="#"><strong>Тарауға өту</strong> </a>
+          </span>
+
+        </div>
+      </div>
+      <div class="col-lg-4  mb-2 mb-sm-4">
+
+        <div class="item">
+
+          <div class="bg-rb p-1">
+            <img src="img/anticor.png" alt="" class="p-3">
+            <p>Antikor<br><br></p>
+          </div>
+          <span class="information d-flex align-items-center justify-content-center p-6">
+            <a href="#"><strong>Тарауға өту</strong> </a>
+          </span>
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+{% endblock %}

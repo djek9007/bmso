@@ -1,0 +1,55 @@
+{% load static blog thumbnail %}<!--Content slider-->
+{% show_slider as sliders %}
+<div id="carouselExampleTouch" class="carousel slide" data-mdb-touch="false">
+    <div class="carousel-inner">
+        {% for slide in sliders %}
+{% if slide.is_active == True %}
+            {% if forloop.first %}
+
+                    <div class="carousel-item active">
+                        <img
+                                src="{{ slide.image.url }}"
+                                class="d-block w-100"
+                                alt="Wild Landscape"
+                        />
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>First slide label</h5>
+                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="carousel-item">
+                    <img
+                            src="{{ slide.image.url }}"
+                            class="d-block w-100"
+                            alt="Wild Landscape"
+                    />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ slide.title }}</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+    <button
+            class="carousel-control-prev"
+            type="button"
+            data-mdb-target="#carouselExampleTouch"
+            data-mdb-slide="prev"
+    >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+            class="carousel-control-next"
+            type="button"
+            data-mdb-target="#carouselExampleTouch"
+            data-mdb-slide="next"
+    >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
