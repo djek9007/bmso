@@ -48,7 +48,7 @@ class Service(models.Model):
     """Класс модели поста"""
     title = models.CharField("Заголовок", max_length=500)
     slug = models.SlugField("url", max_length=100, unique=True)
-    url = models.SlugField("Внешняя ссылка", max_length=100, blank=True, null=True)
+    url = models.CharField("Внешняя ссылка", max_length=100, blank=True, null=True)
     text = RichTextUploadingField(verbose_name="Содержание", blank=True, null=True)
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
