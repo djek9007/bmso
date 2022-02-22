@@ -32,7 +32,7 @@ class TagAdmin(admin.ModelAdmin):
 
 class PostAdmin(admin.ModelAdmin):
     save_on_top = True
-    list_display = ['title', 'published_date', 'get_name_gategory', 'published', 'views',]
+    list_display = ['title', 'published_date',  'published', 'views',]
 
     list_display_links = ("title",)
     prepopulated_fields = {'slug': ('title',)}
@@ -42,7 +42,7 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ('views', 'edit_date',)
     list_filter = ('category',)
 
-    filter_horizontal = ('category', 'tag',)
+
     def thumb_image(self, obj):
         return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
             url=obj.image.url,

@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.views import View
@@ -22,7 +22,7 @@ class PostListView(View):
             posts = self.get_queryset().filter(tags__slug=tag_slug, tags__published=True)
         else:
             posts = self.get_queryset()
-        paginator = Paginator(posts, 4)
+        paginator = Paginator(posts, 5)
         page = self.request.GET.get('page')
         try:
             posts = paginator.page(page)
@@ -39,3 +39,50 @@ class PostListView(View):
         }
 
         return render(request, 'blog/home.html', context)
+
+class PostDetailView(View):
+    """Полная статья одного статьи"""
+    def get(self, request, **kwargs):
+        post = get_object_or_404(Post, slug=kwargs.get("slug"))
+
+        context = {
+                'post': post,
+
+        }
+        return render(request, 'blog/detail.html', context)
+
+    # def post(self, request, **kwargs):
+    #
+    #     post = get_object_or_404(Post, slug=kwargs.get("slug"))
+    #     contact = Pages.objects.get(id=1)
+    #     sent = False
+    #     if request.method == 'POST':
+    #         form = ContactForm(request.POST)
+    #     # Если форма заполнена корректно, сохраняем все введённые пользователем значения
+    #     if form.is_valid():
+    #         cd = form.cleaned_data
+    #         subject = 'Новый запрос от {} по почте {}'.format(cd['name'], cd['email'])
+    #         sender = cd['email']
+    #         phone = cd['phone']
+    #         message = 'Имя клиента: {} \nТелефон клиента: {} \nПочта клиента: {}\nТекст запроса: {}\n{} Со страницы'.format(
+    #             cd['name'], cd['phone'], cd['email'], cd['message'], post)
+    #
+    #         recipients = ['zakaz@mnka.kz']
+    #         # Если пользователь захотел получить копию себе, добавляем его в список получателей
+    #         # if copy:
+    #         #     recipients.append(sender)
+    #         try:
+    #             send_mail(subject, message, 'zakaz@mnka.kz', recipients)
+    #             sent = True
+    #         except BadHeaderError:  # Защита от уязвимости
+    #             return HttpResponse('Invalid header found')
+    #         # Переходим на другую страницу, если сообщение отправлено
+    #         context = {
+    #             'contact': contact,
+    #             'form': form,
+    #             'sent': sent, }
+    #         return render(request, 'blog/detail.html', context)
+    #     else:
+    #         # Заполняем форму
+    #         form = ContactForm()
+    #     return render(request, 'blog/detail.html', context)

@@ -12,7 +12,7 @@ from mptt.models import MPTTModel
 class Category(MPTTModel):
     """Класс модели категорий сетей"""
     name = models.CharField("Название", max_length=100)
-    slug = models.SlugField("url", max_length=100, unique=True)
+    slug = models.SlugField("url", max_length=50, unique=True)
     parent = TreeForeignKey(
         'self',
         verbose_name="Родительская категория",
@@ -37,7 +37,7 @@ class Category(MPTTModel):
 class Tag(models.Model):
     """Модель тегов"""
     name = models.CharField('Название тега', max_length=100, unique=True)
-    slug = models.SlugField('url', max_length=100, unique=True)
+    slug = models.SlugField('url', max_length=50, unique=True)
     published = models.BooleanField("отображать?", default=True)
 
     def __str__(self):
@@ -63,7 +63,7 @@ class Tag(models.Model):
 class Post(models.Model):
     """Класс модели поста"""
     title = models.CharField("Заголовок", max_length=500)
-    slug = models.SlugField("url", max_length=100, unique=True)
+    slug = models.SlugField("url", max_length=50, unique=True)
     text = RichTextUploadingField(verbose_name="Содержание")
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
@@ -78,23 +78,23 @@ class Post(models.Model):
         blank=True,
         null=True
     )
-    image = models.ImageField("Главная фотография", upload_to="uploads/blog/%Y/%m/%d/")
-    category = models.ManyToManyField(
+    image = models.ImageField("Главная фотография", upload_to="uploads/blog/%Y/%m/%d/", help_text='Размеры фото 636x420')
+    category = models.ForeignKey(
         Category,
-        verbose_name="Категория",
+        verbose_name="Категория", on_delete=models.CASCADE
     )
     published = models.BooleanField("Опубликовать?", default=True)
     views = models.PositiveIntegerField("Просмотрено", default=0)
-    tag = models.ManyToManyField(Tag, verbose_name='Теги', blank=True)
+    tag = models.ForeignKey(Tag, verbose_name='Теги', blank=True, on_delete=models.CASCADE)
     # objects = PostManager()
 
-    def get_name_gategory(self):
-        return '\n, \n '.join([str(child.name) for child in self.category.all()])
-
-    get_name_gategory.short_description = 'Категории'
+    # def get_name_gategory(self):
+    #     return '\n, \n '.join([str(child.name) for child in self.category.all()])
+    #
+    # get_name_gategory.short_description = 'Категории'
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail', kwargs={"category_slug": self.category.slug, "slug": self.slug})
+        return reverse('blog:post_detail', kwargs={'category_slug': self.category.slug, "slug": self.slug})
 
     class Meta:
         verbose_name = "Пост"

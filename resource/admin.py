@@ -31,7 +31,7 @@ class ResourceAdmin(admin.ModelAdmin):
     readonly_fields = ('views', 'edit_date',)
     list_filter = ('category',)
 
-    filter_horizontal = ('category',)
+
 
 
 admin.site.register(Resource, ResourceAdmin)

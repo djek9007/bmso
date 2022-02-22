@@ -12,7 +12,7 @@ from mptt.models import MPTTModel
 class CategoryService(MPTTModel):
     """Класс модели категорий сетей"""
     name = models.CharField("Название", max_length=100)
-    slug = models.SlugField("url", max_length=100, unique=True)
+    slug = models.SlugField("url", max_length=50, unique=True)
     parent = TreeForeignKey(
         'self',
         verbose_name="Родительская категория",
@@ -47,7 +47,7 @@ class CategoryService(MPTTModel):
 class Service(models.Model):
     """Класс модели поста"""
     title = models.CharField("Заголовок", max_length=500)
-    slug = models.SlugField("url", max_length=100, unique=True)
+    slug = models.SlugField("url", max_length=50, unique=True)
     url = models.CharField("Внешняя ссылка", max_length=100, blank=True, null=True)
     text = RichTextUploadingField(verbose_name="Содержание", blank=True, null=True)
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
@@ -63,19 +63,19 @@ class Service(models.Model):
         blank=True,
         null=True
     )
-    categoryservice = models.ManyToManyField(
+    categoryservice = models.ForeignKey(
         CategoryService,
-        verbose_name="Категория",
+        verbose_name="Категория", on_delete=models.CASCADE
     )
     published = models.BooleanField("Опубликовать?", default=True)
     views = models.PositiveIntegerField("Просмотрено", default=0)
 
     # objects = PostManager()
 
-    def get_name_gategory(self):
-        return '\n, \n '.join([str(child.name) for child in self.categoryservice.all()])
-
-    get_name_gategory.short_description = 'Категории'
+    # def get_name_gategory(self):
+    #     return '\n, \n '.join([str(child.name) for child in self.categoryservice.all()])
+    #
+    # get_name_gategory.short_description = 'Категории'
 
     def __str__(self):
         return self.title

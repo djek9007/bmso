@@ -8,7 +8,7 @@ from mptt.models import MPTTModel
 class Menu(MPTTModel):
     """Класс модели меню"""
     name = models.CharField("Название", max_length=100)
-    slug = models.SlugField("url", max_length=100, unique=True, blank=True, null=True )
+    slug = models.SlugField("url", max_length=50, unique=True, blank=True, null=True )
     parent = TreeForeignKey(
         'self',
         verbose_name="Родительская категория",

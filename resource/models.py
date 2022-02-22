@@ -10,7 +10,7 @@ from mptt.models import MPTTModel
 class CategoryResource(MPTTModel):
     """Класс модели категорий сетей"""
     name = models.CharField("Название", max_length=100)
-    slug = models.SlugField("url", max_length=100, unique=True)
+    slug = models.SlugField("url", max_length=50, unique=True)
     parent = TreeForeignKey(
         'self',
         verbose_name="Родительская категория",
@@ -35,7 +35,7 @@ class CategoryResource(MPTTModel):
 class Resource(models.Model):
     """Класс модели поста"""
     title = models.CharField("Заголовок", max_length=500)
-    slug = models.SlugField("url", max_length=100, unique=True)
+    slug = models.SlugField("url", max_length=50, unique=True)
     text = RichTextUploadingField(verbose_name="Содержание")
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
@@ -51,9 +51,9 @@ class Resource(models.Model):
         null=True
     )
     image = models.ImageField("Главная фотография", upload_to="uploads/resource/%Y/%m/%d/", blank=True, null=True)
-    category = models.ManyToManyField(
+    category = models.ForeignKey(
         CategoryResource,
-        verbose_name="Категория",
+        verbose_name="Категория", on_delete=models.CASCADE
     )
     published = models.BooleanField("Опубликовать?", default=True)
     views = models.PositiveIntegerField("Просмотрено", default=0)

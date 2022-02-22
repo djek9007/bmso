@@ -22,7 +22,7 @@ class FileItemInline(admin.TabularInline):
 
 class ServiceAdmin(admin.ModelAdmin):
 
-    list_display = ['title', 'published_date', 'get_name_gategory', 'published', 'views',]
+    list_display = ['title', 'published_date', 'categoryservice', 'published', 'views',]
 
     list_display_links = ("title",)
     prepopulated_fields = {'slug': ('title',)}
@@ -32,7 +32,7 @@ class ServiceAdmin(admin.ModelAdmin):
     readonly_fields = ('views', 'edit_date', 'thumb_image',)
     list_filter = ('categoryservice',)
     save_on_top = True
-    filter_horizontal = ('categoryservice', )
+
     def thumb_image(self, obj):
         return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
             url=obj.image.url,

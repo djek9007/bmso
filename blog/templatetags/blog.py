@@ -12,7 +12,7 @@ def get_news_in_main():
     """QuerySet menu item"""
     return Post.objects.filter(
             published=True,
-            category=6,
+            category=5,
         )
 
 

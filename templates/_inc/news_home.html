@@ -1,0 +1,73 @@
+
+{% load static blog thumbnail %}
+<section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="d-flex position-relative float-left">
+                        <h3 class="section-title font-weight-600 ">Жаңалықтар</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for post in post_list %}
+                    {% if forloop.first %}
+                        <div class="col-lg-6  mb-5 mb-sm-2">
+
+                            <div class="position-relative image-hover">
+
+                                {% if post.image %}
+                                    {% thumbnail post.image "636x420" crop="center" as im %}
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                                             class="img-fluid" alt="{{ post.title }}">
+                                    {% endthumbnail %}
+                                {% else %}
+                                    <img src="{% static 'images/no_image.jpg' %}" class="img-fluid">
+                                {% endif %}
+                                <span class="thumb-title">{{ post.category }}</span>
+                            </div>
+                            <h1 class="font-weight-600 mt-3"><a href="news-detail.html">
+                                {{ post.title }}</a>
+                            </h1>
+                            <p class="fs-15 font-weight-normal">
+                                {{ post.text|safe|truncatewords:18 }}
+                            </p>
+                        </div>
+                        <div class="col-lg-6  mb-5 mb-sm-2">
+                        <div class="row">
+                    {% else %}
+                        <div class="col-sm-6  mb-5 mb-sm-2">
+                            <div class="position-relative image-hover">
+                                {% if post.image %}
+                                    {% thumbnail post.image "306x154" crop="center" as im %}
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                                             class="img-fluid" alt="{{ post.title }}">
+                                    {% endthumbnail %}
+                                {% else %}
+                                    <img src="{% static 'images/no_image.jpg' %}" class="img-fluid">
+                                {% endif %}
+                                <span class="thumb-title">{{ post.category }}</span>
+                            </div>
+                            <h5 class="font-weight-600 mt-3"><a href="{{ post.get_absolute_url }}">
+                                {{ post.title }}</a>
+                            </h5>
+                            <p class="fs-15 font-weight-normal">
+                                {{ post.text|safe|truncatewords:8 }}
+                            </p>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        </div>
+    </section>
+
