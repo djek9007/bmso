@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static blog thumbnail %}
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="row">
+    <div class="col-md-4">
+      <img
+        src="{{ post.image.url}}"
+        alt="{{ post.title}}"
+        class="img-fluid rounded-start"
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+           <h5 class="card-header">{{ flatpage.title}}</h5>
+        <p class="card-text">
+            {{ flatpage.content|safe}}
+        </p>
+      </div>
+    </div>
+</div>
+    </div>
+{% endblock %}
