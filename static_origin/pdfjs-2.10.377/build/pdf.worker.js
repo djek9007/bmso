@@ -52351,7 +52351,7 @@ class Catalog {
     const pagesObj = this._catDict.get("Pages");
 
     if (!(0, _primitives.isDict)(pagesObj)) {
-      throw new _util.FormatError("Invalid top-level pages dictionary.");
+      throw new _util.FormatError("Invalid top-level flatpages dictionary.");
     }
 
     return (0, _util.shadow)(this, "toplevelPagesDict", pagesObj);
@@ -52673,7 +52673,7 @@ class Catalog {
     const obj = this.toplevelPagesDict.get("Count");
 
     if (!Number.isInteger(obj)) {
-      throw new _util.FormatError("Page count in top-level pages dictionary is not an integer.");
+      throw new _util.FormatError("Page count in top-level flatpages dictionary is not an integer.");
     }
 
     return (0, _util.shadow)(this, "numPages", obj);

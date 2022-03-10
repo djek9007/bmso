@@ -1,4 +1,4 @@
-{% load static menu_tags mptt_tags %}
+{% load static menu_tags mptt_tags thumbnail %}
 <!--Main Navigation-->
 <header>
     <!-- Jumbotron -->
@@ -7,7 +7,7 @@
             <div class="row">
                 <!-- Left elements -->
                 <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
-                    <a href="#!" class="ms-md-2">
+                    <a href="{% url 'blog:home' %}" class="ms-md-2">
                         <img src="{% static 'img/logo-new.png' %}" height="40"/>
                     </a>
                 </div>
@@ -111,9 +111,13 @@
                                     <div class="pt-2">
                                         <div class="bg-image mb-4"
                                              data-mdb-ripple-color="light">
-                                            {% if node.image %}
-                                                <img src="{{ node.image.url }}" class="img-fluid"/>
-                                            {% endif %}
+                                         {% if node.image %}
+                                    {% thumbnail node.image "300x200" crop="center" as im %}
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                                             class="img-fluid" alt="{{ post.title }}">
+                                    {% endthumbnail %}
+                                {% endif %}
+
                                             <a href="#!">
                                                 <div class="mask"
                                                      style="background-color: rgba(251, 251, 251, 0.15);"></div>
@@ -129,10 +133,10 @@
                                                 {% if forloop.counter <= 3 %}
 
                                                     <div class="col-lg-6 col-md-6 col-xl-6  mb-md-0 d-flex align-items-start list-group list-group-flush">
-                                                        {% if child.stroke %}<br /><a href="{{ child.get_absolute_url }}"
+                                                        {% if child.stroke %}<br /><a href="/{{ child.slug }}/"
                                                            class="list-group-item list-group-item-action">{{ child.name }}</a>
                                                         <hr class="my-2">
-                                                            {% else %}<a href="{{ child.get_absolute_url }}"
+                                                            {% else %}<a href="/{{ child.slug}}/"
                                                            class="list-group-item list-group-item-action">{{ child.name }}</a>
                                                         <hr class="my-2">
                                                             {% endif %}
@@ -141,10 +145,10 @@
                                                 {% else %}
                                                     <div class="col-lg-6 col-md-6 col-xl-6 mb-md-0 d-flex align-items-end list-group list-group-flush">
                                                         {% if child.stroke %}
-                                                            <br/><a href="{{ child.get_absolute_url }}"
+                                                            <br/><a href="/{{ child.slug}}/"
                                                                     class="list-group-item list-group-item-action ">{{ child.name|safe }}</a>
                                                             <hr class="my-2">
-                                                        {% else %}<a href="{{ child.get_absolute_url }}"
+                                                        {% else %}<a href="/{{ child.slug }}/"
                                                                      class="list-group-item list-group-item-action ">{{ child.name|safe }}</a>
                                                             <hr class="my-2">
                                                         {% endif %}

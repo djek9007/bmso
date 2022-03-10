@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+from django.urls import reverse
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
@@ -23,8 +24,8 @@ class Menu(MPTTModel):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('blog:post_lists', kwargs={"category_slug": self.slug})
+    def get_absolute_url(self):
+        return reverse('blog:service_lists', kwargs={"category_slug": self.slug})
 
     class Meta:
         verbose_name = "Пункт меню"

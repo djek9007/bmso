@@ -1,4 +1,4 @@
-
+<br>
 {% load static blog thumbnail %}
 <section class="news">
         <div class="container">
@@ -8,10 +8,16 @@
                         <h3 class="section-title font-weight-600 ">Жаңалықтар</h3>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="float-end">
+                        <small> <a href="cat/zhanalyqtar/">барлығын қарау</a></small>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
-                {% for post in post_list %}
+            {% show_news as posts %}
+                {% for post in posts %}
                     {% if forloop.first %}
                         <div class="col-lg-6  mb-5 mb-sm-2">
 
@@ -27,7 +33,7 @@
                                 {% endif %}
                                 <span class="thumb-title">{{ post.category }}</span>
                             </div>
-                            <h1 class="font-weight-600 mt-3"><a href="news-detail.html">
+                            <h1 class="font-weight-600 mt-3"><a href="{{ post.get_absolute_url }}">
                                 {{ post.title }}</a>
                             </h1>
                             <p class="fs-15 font-weight-normal">

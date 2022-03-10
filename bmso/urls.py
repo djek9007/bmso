@@ -19,9 +19,15 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('blog.urls', namespace='blog')),
+
+    path('fotomuragat/', include('gallery.urls', namespace='gallery')),
+    path('p-', include('django.contrib.flatpages.urls')),
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+
+    path('', include('blog.urls', namespace='blog')),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,3 +1,32 @@
 {% extends 'base.html' %}
 {% load static blog thumbnail %}
-{% block content %}{% endblock %}
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="row">
+    <div class="col-md-4">
+      <img
+        src="{{ post.image.url}}"
+        alt="{{ post.title}}"
+        class="img-fluid rounded-start"
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+           <h5 class="card-header">{{ post.title}}</h5>
+        <p class="card-text">
+            {{ post.text|safe}}
+        </p>
+      </div>
+    </div>
+            {% if post.fileitems %}
+                {% for f in post.fileitems.all %}
+{#                    <img src="{{ f.file.url }}" alt="">#}
+<embed src="{{ f.file.url}}" type="application/pdf" height="700px" width="500">
+                    <a href="{{ f.file}}">{{ f.description }}</a>
+                {% endfor %}
+            {% endif %}
+</div>
+    </div>
+    
+{% endblock %}

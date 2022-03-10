@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static blog thumbnail %}
+{% block title %}{{ flatpage.title }}{% endblock %}
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="row">
+
+    <div class="col-md-12">
+      <div class="card-body">
+           <h5 class="card-header">{{ flatpage.title}}</h5>
+        <p class="card-text">
+            {{ flatpage.content|safe}}
+        </p>
+      </div>
+    </div>
+</div>
+    </div>
+{% endblock %}

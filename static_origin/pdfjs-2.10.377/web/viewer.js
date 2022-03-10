@@ -1649,7 +1649,7 @@ const PDFViewerApplication = {
     const numLabels = labels.length;
 
     if (numLabels !== this.pagesCount) {
-      console.error("The number of Page Labels does not match the number of pages in the document.");
+      console.error("The number of Page Labels does not match the number of flatpages in the document.");
       return;
     }
 
@@ -7571,7 +7571,7 @@ class PDFOutlineViewer extends _base_tree_viewer.BaseTreeViewer {
 
   async _currentOutlineItem() {
     if (!this._isPagesLoaded) {
-      throw new Error("_currentOutlineItem: All pages have not been loaded.");
+      throw new Error("_currentOutlineItem: All flatpages have not been loaded.");
     }
 
     if (!this._outline || !this._pdfDocument) {
@@ -10032,7 +10032,7 @@ class BaseViewer {
 
   set pagesRotation(rotation) {
     if (!(0, _ui_utils.isValidRotation)(rotation)) {
-      throw new Error("Invalid pages rotation angle.");
+      throw new Error("Invalid flatpages rotation angle.");
     }
 
     if (!this.pdfDocument) {
@@ -14918,7 +14918,7 @@ PDFPrintService.prototype = {
     }, this);
 
     if (!hasEqualPageSizes) {
-      console.warn("Not all pages have the same size. The printed " + "result may be incorrect!");
+      console.warn("Not all flatpages have the same size. The printed " + "result may be incorrect!");
     }
 
     this.pageStyleSheet = document.createElement("style");

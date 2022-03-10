@@ -26,29 +26,29 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('blog:post_lists', kwargs={"category_slug": self.slug})
+    def get_absolute_url(self):
+        return reverse('blog:post_lists', kwargs={"category_slug": self.slug})
 
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
 
-class Tag(models.Model):
-    """Модель тегов"""
-    name = models.CharField('Название тега', max_length=100, unique=True)
-    slug = models.SlugField('url', max_length=50, unique=True)
-    published = models.BooleanField("отображать?", default=True)
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('blog:tag', kwargs={"tag_slug": self.slug})
-
-    class Meta:
-        verbose_name = "Тег"
-        verbose_name_plural = "Теги"
+# class Tag(models.Model):
+#     """Модель тегов"""
+#     name = models.CharField('Название тега', max_length=100, unique=True)
+#     slug = models.SlugField('url', max_length=50, unique=True)
+#     published = models.BooleanField("отображать?", default=True)
+#
+#     def __str__(self):
+#         return self.name
+#
+#     def get_absolute_url(self):
+#         return reverse('blog:tag', kwargs={"tag_slug": self.slug})
+#
+#     class Meta:
+#         verbose_name = "Тег"
+#         verbose_name_plural = "Теги"
 
 # class PostManager(models.Manager):
 #     use_for_related_fields = True
@@ -85,7 +85,7 @@ class Post(models.Model):
     )
     published = models.BooleanField("Опубликовать?", default=True)
     views = models.PositiveIntegerField("Просмотрено", default=0)
-    tag = models.ForeignKey(Tag, verbose_name='Теги', blank=True, on_delete=models.CASCADE)
+    # tag = models.ForeignKey(Tag, verbose_name='Теги', blank=True, on_delete=models.CASCADE)
     # objects = PostManager()
 
     # def get_name_gategory(self):

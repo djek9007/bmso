@@ -4,8 +4,13 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from django.views import View
 
-from blog.models import Post
+from blog.models import Post, Category
 
+
+
+class HomeView(View):
+    def get(self, request):
+        return render(request, 'blog/home.html',)
 
 class PostListView(View):
     """Вывод категории и вывод стати"""
@@ -14,15 +19,14 @@ class PostListView(View):
     def get_queryset(self):
         return Post.objects.filter(published=True)
 
-    def get(self, request, category_slug=None, tag_slug=None):
+    def get(self, request, category_slug=None):
         # form = ContactForm()
+        category = Category.objects.get(slug=self.kwargs['category_slug'])
         if category_slug is not None:
             posts = self.get_queryset().filter(category__slug=category_slug, category__published=True)
-        elif tag_slug is not None:
-            posts = self.get_queryset().filter(tags__slug=tag_slug, tags__published=True)
         else:
             posts = self.get_queryset()
-        paginator = Paginator(posts, 5)
+        paginator = Paginator(posts, 12)
         page = self.request.GET.get('page')
         try:
             posts = paginator.page(page)
@@ -35,18 +39,24 @@ class PostListView(View):
 
         context = {
             'post_list': posts,
+             'category': category,
             # 'form':form,
         }
 
-        return render(request, 'blog/home.html', context)
+        return render(request, 'blog/list.html', context)
+
+
 
 class PostDetailView(View):
     """Полная статья одного статьи"""
     def get(self, request, **kwargs):
         post = get_object_or_404(Post, slug=kwargs.get("slug"))
-
+        fileitems = post.fileitems.all()
+        photoitems = post.photoitems.all()
         context = {
-                'post': post,
+            'post': post,
+            'fileitems':fileitems,
+            'photoitems':photoitems,
 
         }
         return render(request, 'blog/detail.html', context)
@@ -86,3 +96,4 @@ class PostDetailView(View):
     #         # Заполняем форму
     #         form = ContactForm()
     #     return render(request, 'blog/detail.html', context)
+

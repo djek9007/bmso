@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+  <!-- Pagination -->
+<div class="container">
+    <div class="row d-flex justify-content-center justify-content-md-center">
+      <div class="col-6 text-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+               {% if post_list.has_previous %}
+                 <li class="page-item ">
+              <a class="page-link" href="?page={{ post_list.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">«</span>
+              </a>
+            </li>{% endif %}
+
+            {% for num in post_list.paginator.page_range %}
+                {% if num == post_list.number %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+
+                {% endif %}
+            {% endfor %}
+
+          {% if post_list.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ post_list.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">»</span>
+              </a>
+            </li>
+          {% endif %}
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pagination -->

@@ -778,7 +778,7 @@
 				return this;
 			},
 
-			// Returns the total number of pages required to display all the thumbnails.
+			// Returns the total number of flatpages required to display all the thumbnails.
 			getNumPages: function() {
 				return Math.ceil(this.data.length/this.numThumbs);
 			},
@@ -851,7 +851,7 @@
 			// Builds a single page link within a pager.  This function is called by buildPager
 			// @param {jQuery} pager A jQuery element set matching the particular pager to be rebuilt.
 			// @param {Integer} pageNum The page number of the page link to build.
-			// @param {Integer} numPages The total number of pages required to display all thumbnails.
+			// @param {Integer} numPages The total number of flatpages required to display all thumbnails.
 			buildPageLink: function(pager, pageNum, numPages) {
 				var pageLabel = pageNum + 1;
 				var currentPage = this.getCurrentPage();

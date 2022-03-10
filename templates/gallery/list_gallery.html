@@ -1,10 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load thumbnail static %}
+{% block title %} {{ year.year }} {% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="text-center">
+          <h1 class="text-center mt-5">
+              {% if year %}
+              {{ year.year }}
+              {% endif %}
+          </h1>
+
+        </div>
+
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+        {% for y in year_list %}
+              <div class="col-sm-3  mb-5 mb-sm-2">
+                    <div class="stack twisted  ripple">
+
+                                  {% if y.image %}
+                                    {% thumbnail y.image "300x206" crop="center" as im %}
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                                             class="img-fluid" alt="{{ y.title }}">
+                                    {% endthumbnail %}
+                                {% else %}
+                                    <img src="{% static 'img/no_photo.jpg' %}" class="img-fluid">
+                                {% endif %}
+                        <div class="mask rounded" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <a href="{{ y.slug }}/"><button type="button" class="btn btn-outline-light ">{{ y.year }}</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+
+
+  </div>
+
+
+  </div>
+ <div class="container">
+    <div class="row">
+        {% for p in post_list %}
+ <div class="col-sm-3  mb-5 mb-sm-2">
+                    <div class="stack twisted  ripple">
+
+                                  {% if p.image %}
+                                    {% thumbnail p.image "300x206" crop="center" as im %}
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                                             class="img-fluid" alt="{{ p.title }}">
+                                    {% endthumbnail %}
+                                {% else %}
+                                    <img src="{% static 'img/no_photo.jpg' %}" class="img-fluid">
+                                {% endif %}
+                        <div class="mask rounded" style="background-color: rgba(0, 0, 0, 0.3);">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <a href="{{ p.get_absolute_url }}"><button type="button" class="btn btn-outline-light ">{{ p.name }}</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+
+
+            </div>
+    </div>
+    {% include '_inc/pagination.html' %}
+
+{% endblock %}

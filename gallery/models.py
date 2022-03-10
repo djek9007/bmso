@@ -1,28 +1,47 @@
 from django.db import models
 
 # Create your models here.
+from django.urls import reverse
+
+
 class Year(models.Model):
-    year = models.CharField('Год', max_length=100)
+    year = models.CharField('Год', max_length=100, unique=True)
+    image = models.ImageField(upload_to='uploads/photo/albom/%Y/%m/%d/', verbose_name='Обложка', blank=True, null=True,
+                               help_text="Размеры фото 300*206")
+    slug = models.SlugField("url", max_length=50, unique=True)
+    published = models.BooleanField("Опубликовать?", default=True)
 
     def __str__(self):
         return self.year
+    def get_absolute_url(self):
+        return reverse('gallery:gallery_list', kwargs={'albom_slug': self.slug})
 
     class Meta:
 
         verbose_name = "Год архива"
         verbose_name_plural = "Года архива"
 
+
 class Albom(models.Model):
     year = models.ForeignKey(Year, on_delete=models.CASCADE, verbose_name='Год')
     name = models.CharField('Наименование альбома', max_length=200)
+    slug = models.SlugField("url", max_length=50, unique=True)
+    image = models.ImageField(upload_to='uploads/photo/albom/%Y/%m/%d/', verbose_name='Обложка', blank=True, null=True,
+                              help_text="Размеры фото 300*206")
+    published = models.BooleanField("Опубликовать?", default=True)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('gallery:gallery_detail', kwargs={'year_slug': self.year.slug,'albom_slug': self.slug})
 
     class Meta:
 
         verbose_name = "Альбом"
         verbose_name_plural = "Альбомы"
+
+
 
 class PhotoItem(models.Model):
 

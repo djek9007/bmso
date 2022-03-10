@@ -12,6 +12,10 @@ class PhotoItemInline(admin.TabularInline):
 class AlbomAdmin(admin.ModelAdmin):
     list_display = ['name', 'year',]
     inlines = [PhotoItemInline]
+    prepopulated_fields = {'slug': ('name',)}
+
+class YearAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('year',)}
 
 admin.site.register(Albom, AlbomAdmin)
-admin.site.register(Year)
+admin.site.register(Year, YearAdmin)

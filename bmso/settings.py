@@ -25,18 +25,28 @@ SECRET_KEY = 'django-insecure-1!z965q9#o$@1^k4c!-4y)(g!jh^wa=u!+s-xfl%!&^h$&3(ls
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.messages',
+    'django.contrib.sites',
+
+    # 'allauth',
+    # 'allauth.account',
+    # # 'allauth.socialaccount',
+
+
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.flatpages',
+
+
 
     'sorl.thumbnail',
     'ckeditor_uploader',
@@ -45,11 +55,11 @@ INSTALLED_APPS = [
 
     'blog.apps.BlogConfig',
     'menu.apps.MenuConfig',
-    'page.apps.PageConfig',
     'slide.apps.SlideConfig',
     'gallery.apps.GalleryConfig',
-    'service.apps.ServiceConfig',
-    'resource.apps.ResourceConfig',
+
+    'django_cleanup.apps.CleanupConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -60,7 +70,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 ]
+
+
 
 ROOT_URLCONF = 'bmso.urls'
 
@@ -76,6 +89,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+# `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -139,7 +154,28 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+# AUTHENTICATION_BACKENDS = [
+#
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
+#
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+#
+# ]
+# Provider specific settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '123',
+#             'secret': '456',
+#             'key': ''
+#         }
+#     }
+# }
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -224,3 +260,6 @@ CKEDITOR_CONFIGS = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SITE_ID = 1
+
+AUTH_USER_MODEL='accounts.CustomUser'
