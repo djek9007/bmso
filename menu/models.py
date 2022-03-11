@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 from django.urls import reverse
 from mptt.fields import TreeForeignKey
@@ -8,7 +8,7 @@ from mptt.models import MPTTModel
 
 class Menu(MPTTModel):
     """Класс модели меню"""
-    name = models.CharField("Название", max_length=100)
+    name = models.CharField(_("Название"), max_length=100)
     slug = models.SlugField("url", max_length=50, unique=True, blank=True, null=True )
     parent = TreeForeignKey(
         'self',

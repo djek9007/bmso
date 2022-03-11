@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -35,28 +34,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sites',
 
-    # 'allauth',
-    # 'allauth.account',
-    # # 'allauth.socialaccount',
-
-
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
 
-
-
     'sorl.thumbnail',
     'ckeditor_uploader',
     'ckeditor',
     'mptt',
+    'import_export',
 
     'blog.apps.BlogConfig',
     'menu.apps.MenuConfig',
     'slide.apps.SlideConfig',
     'gallery.apps.GalleryConfig',
+    'accounts.apps.AccountsConfig',
+    'organizations.apps.OrganizationsConfig',
 
     'django_cleanup.apps.CleanupConfig',
 
@@ -73,8 +68,6 @@ MIDDLEWARE = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 ]
 
-
-
 ROOT_URLCONF = 'bmso.urls'
 
 TEMPLATES = [
@@ -89,8 +82,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-# `allauth` needs this from django
-                'django.template.context_processors.request',
             ],
         },
     },
@@ -98,14 +89,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bmso.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR/'db.sqlite3',
+        'NAME': BASE_DIR / 'db2.sqlite3',
     }
 }
 # DATABASES = {
@@ -140,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -154,34 +143,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-# AUTHENTICATION_BACKENDS = [
-#
-#     # Needed to login by username in Django admin, regardless of `allauth`
-#     'django.contrib.auth.backends.ModelBackend',
-#
-#     # `allauth` specific authentication methods, such as login by e-mail
-#     'allauth.account.auth_backends.AuthenticationBackend',
-#
-# ]
-# Provider specific settings
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#         # For each OAuth based provider, either add a ``SocialApp``
-#         # (``socialaccount`` app) containing the required client
-#         # credentials, or list them here:
-#         'APP': {
-#             'client_id': '123',
-#             'secret': '456',
-#             'key': ''
-#         }
-#     }
-# }
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_origin'),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_origin'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -239,7 +206,7 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'autolink',
@@ -262,4 +229,6 @@ CKEDITOR_CONFIGS = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
-AUTH_USER_MODEL='accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True

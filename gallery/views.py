@@ -13,6 +13,7 @@ class GalleryView(View):
 
     def get(self, request, ):
         year = self.get_queryset()
+        title = 'Фотомұрағат'
         paginator = Paginator(year, 12)
         page = self.request.GET.get('page')
         try:
@@ -26,6 +27,7 @@ class GalleryView(View):
 
         context = {
             'year_list': year,
+            'title': title
         }
 
         return render(request, 'gallery/list_gallery.html', context)

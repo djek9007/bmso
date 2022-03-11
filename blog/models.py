@@ -1,6 +1,6 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
-
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 from django.urls import reverse
 from django.utils import timezone
@@ -11,7 +11,7 @@ from mptt.models import MPTTModel
 
 class Category(MPTTModel):
     """Класс модели категорий сетей"""
-    name = models.CharField("Название", max_length=100)
+    name = models.CharField(_("Название"), max_length=100)
     slug = models.SlugField("url", max_length=50, unique=True)
     parent = TreeForeignKey(
         'self',
@@ -62,9 +62,9 @@ class Category(MPTTModel):
 
 class Post(models.Model):
     """Класс модели поста"""
-    title = models.CharField("Заголовок", max_length=500)
+    title = models.CharField(_("Заголовок"), max_length=500)
     slug = models.SlugField("url", max_length=50, unique=True)
-    text = RichTextUploadingField(verbose_name="Содержание")
+    text = RichTextUploadingField(_("Содержание"))
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
@@ -110,7 +110,7 @@ class PhotoItem(models.Model):
     image = models.ImageField(upload_to='uploads/blog/%Y/%m/%d/', verbose_name='Галерея', blank=True, null=True, unique=True, help_text="Размеры фото 360*560")
 
     photo = models.ForeignKey(Post, related_name='photoitems', on_delete=models.CASCADE, help_text="Размеры фото 455*565" )
-    description = models.CharField("Краткое описание фото", max_length=250, default='', blank=True, null=True)
+    description = models.CharField(_("Краткое описание фото"), max_length=250, default='', blank=True, null=True)
 
     def __str__(self):
 
@@ -128,7 +128,7 @@ class FileItem(models.Model):
     file = models.FileField(upload_to='uploads/blog/file/%Y/%m/%d', verbose_name='Документы для прикрепление', blank=True, null=True, unique=True, help_text="загружать только pdf")
 
     doc = models.ForeignKey(Post, related_name='fileitems', on_delete=models.CASCADE, help_text="Pdf файлы" )
-    description = models.CharField("Краткое описание ", max_length=250, default='', blank=True, null=True)
+    description = models.CharField(_("Краткое описание "), max_length=250, default='', blank=True, null=True)
 
     def __str__(self):
 

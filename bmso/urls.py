@@ -24,7 +24,7 @@ urlpatterns = [
     path('p-', include('django.contrib.flatpages.urls')),
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path('accounts/', include('django.contrib.auth.urls')),
 
     path('', include('blog.urls', namespace='blog')),
 

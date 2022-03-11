@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load thumbnail static %}
-{% block title %} {{ year.year }} {% endblock %}
+{% block title %} {{ title }}{{ year.year }} {% endblock %}
 {% block content %}
     <div class="container">
     <div class="row">
       <div class="col-sm-12">
         <div class="text-center">
           <h1 class="text-center mt-5">
+          {{ title }}
               {% if year %}
               {{ year.year }}
               {% endif %}
